@@ -100,8 +100,8 @@ def movep(b,r,c,player) :
                         result.append(copyb3)
     return result
 
-#function to move robin
-def mover(b,r,c,player) :
+#function to move horizontally and vertically
+def movestrat(b,r,c,player) :
     result=[]
     if player=='w' :
         #vertical
@@ -113,12 +113,11 @@ def mover(b,r,c,player) :
                         blockeraway=row
                 else :
                     break
-            print blockeraway
             for i in range (r-1,blockeraway-1,-1):
                 bcopy=copy.deepcopy(b)
                 if bcopy[i][c].islower() or bcopy[i][c]=='.' :
                     bcopy[r][c]='.'
-                    bcopy[i][c]='R'
+                    bcopy[i][c]=b[r][c]
                     result.append(bcopy)
         blockertoward=7
         if r!=7 :
@@ -128,12 +127,11 @@ def mover(b,r,c,player) :
                         blockertoward=row
                 else :
                     break
-            print blockertoward
             for i in range (r+1,blockertoward+1):
                 bcopy=copy.deepcopy(b)
                 if bcopy[i][c].islower() or bcopy[i][c]=='.' :
                     bcopy[r][c]='.'
-                    bcopy[i][c]='R'
+                    bcopy[i][c]=b[r][c]
                     result.append(bcopy)
         #horizontal
         blockeraway=0
@@ -148,7 +146,7 @@ def mover(b,r,c,player) :
                 bcopy=copy.deepcopy(b)
                 if bcopy[r][i].islower() or bcopy[r][i]=='.' :
                     bcopy[r][c]='.'
-                    bcopy[r][i]='R'
+                    bcopy[r][i]=b[r][c]
                     result.append(bcopy)
         blockertoward=7
         if c!=7 :
@@ -162,7 +160,7 @@ def mover(b,r,c,player) :
                 bcopy=copy.deepcopy(b)
                 if bcopy[r][i].islower() or bcopy[r][i]=='.' :
                     bcopy[r][c]='.'
-                    bcopy[r][i]='R'
+                    bcopy[r][i]=b[r][c]
                     result.append(bcopy)
     else :
         #for black
@@ -175,12 +173,11 @@ def mover(b,r,c,player) :
                         blockeraway=row
                 else :
                     break
-            print blockeraway
             for i in range (r-1,blockeraway-1,-1):
                 bcopy=copy.deepcopy(b)
                 if bcopy[i][c].isupper() or bcopy[i][c]=='.' :
                     bcopy[r][c]='.'
-                    bcopy[i][c]='r'
+                    bcopy[i][c]=b[r][c]
                     result.append(bcopy)
         blockertoward=7
         if r!=7 :
@@ -190,12 +187,11 @@ def mover(b,r,c,player) :
                         blockertoward=row
                 else :
                     break
-            print blockertoward
             for i in range (r+1,blockertoward+1):
                 bcopy=copy.deepcopy(b)
                 if bcopy[i][c].isupper() or bcopy[i][c]=='.' :
                     bcopy[r][c]='.'
-                    bcopy[i][c]='r'
+                    bcopy[i][c]=b[r][c]
                     result.append(bcopy)
         #horizontal
         blockeraway=0
@@ -210,7 +206,7 @@ def mover(b,r,c,player) :
                 bcopy=copy.deepcopy(b)
                 if bcopy[r][i].isupper() or bcopy[r][i]=='.' :
                     bcopy[r][c]='.'
-                    bcopy[r][i]='r'
+                    bcopy[r][i]=b[r][c]
                     result.append(bcopy)
         blockertoward=7
         if c!=7 :
@@ -224,10 +220,368 @@ def mover(b,r,c,player) :
                 bcopy=copy.deepcopy(b)
                 if bcopy[r][i].isupper() or bcopy[r][i]=='.' :
                     bcopy[r][c]='.'
-                    bcopy[r][i]='r'
+                    bcopy[r][i]=b[r][c]
                     result.append(bcopy)
     return result
-                
+
+#function to move diagionally
+def movediag(b,r,c,player) :
+    result=[]
+    cr=r
+    cc=c
+    if player=='w' :
+        #right-up
+        while (cr-1>=0 and cc+1<=7) :
+            if b[cr-1][cc+1]=='.' :
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[cr-1][cc+1]=b[r][c]
+                result.append(bcopy)
+            else :
+                if b[cr-1][cc+1].islower() :
+                    bcopy=copy.deepcopy(b)
+                    bcopy[r][c]='.'
+                    bcopy[cr-1][cc+1]=b[r][c]
+                    result.append(bcopy)
+                    break
+                else :
+                    break
+            cr-=1
+            cc+=1
+        cr=r
+        cc=c
+        #right-down
+        while (cr+1<=7 and cc+1<=7) :
+            if b[cr+1][cc+1]=='.' :
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[cr+1][cc+1]=b[r][c]
+                result.append(bcopy)
+            else :
+                if b[cr+1][cc+1].islower() :
+                    bcopy=copy.deepcopy(b)
+                    bcopy[r][c]='.'
+                    bcopy[cr+1][cc+1]=b[r][c]
+                    result.append(bcopy)
+                    break
+                else :
+                    break
+            cr+=1
+            cc+=1
+        cr=r
+        cc=c
+        #left-up
+        while (cr-1>=0 and cc-1>=0) :
+            if b[cr-1][cc-1]=='.' :
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[cr-1][cc-1]=b[r][c]
+                result.append(bcopy)
+            else :
+                if b[cr-1][cc-1].islower() :
+                    bcopy=copy.deepcopy(b)
+                    bcopy[r][c]='.'
+                    bcopy[cr-1][cc-1]=b[r][c]
+                    result.append(bcopy)
+                    break
+                else :
+                    break
+            cr-=1
+            cc-=1
+        cr=r
+        cc=c
+        #left-down
+        while (cr+1<=7 and cc-1>=0) :
+            if b[cr+1][cc-1]=='.' :
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[cr+1][cc-1]=b[r][c]
+                result.append(bcopy)
+            else :
+                if b[cr+1][cc-1].islower() :
+                    bcopy=copy.deepcopy(b)
+                    bcopy[r][c]='.'
+                    bcopy[cr+1][cc-1]=b[r][c]
+                    result.append(bcopy)
+                    break
+                else :
+                    break
+            cr+=1
+            cc-=1
+    else :
+        #right-up
+        while (cr-1>=0 and cc+1<=7) :
+            if b[cr-1][cc+1]=='.' :
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[cr-1][cc+1]=b[r][c]
+                result.append(bcopy)
+            else :
+                if b[cr-1][cc+1].isupper() :
+                    bcopy=copy.deepcopy(b)
+                    bcopy[r][c]='.'
+                    bcopy[cr-1][cc+1]=b[r][c]
+                    result.append(bcopy)
+                    break
+                else :
+                    break
+            cr-=1
+            cc+=1
+        cr=r
+        cc=c
+        #right-down
+        while (cr+1<=7 and cc+1<=7) :
+            if b[cr+1][cc+1]=='.' :
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[cr+1][cc+1]=b[r][c]
+                result.append(bcopy)
+            else :
+                if b[cr+1][cc+1].isupper() :
+                    bcopy=copy.deepcopy(b)
+                    bcopy[r][c]='.'
+                    bcopy[cr+1][cc+1]=b[r][c]
+                    result.append(bcopy)
+                    break
+                else :
+                    break
+            cr+=1
+            cc+=1
+        cr=r
+        cc=c
+        #left-up
+        while (cr-1>=0 and cc-1>=0) :
+            if b[cr-1][cc-1]=='.' :
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[cr-1][cc-1]=b[r][c]
+                result.append(bcopy)
+            else :
+                if b[cr-1][cc-1].isupper() :
+                    bcopy=copy.deepcopy(b)
+                    bcopy[r][c]='.'
+                    bcopy[cr-1][cc-1]=b[r][c]
+                    result.append(bcopy)
+                    break
+                else :
+                    break
+            cr-=1
+            cc-=1
+        cr=r
+        cc=c
+        #left-down
+        while (cr+1>=0 and cc-1>=0) :
+            if b[cr+1][cc-1]=='.' :
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[cr+1][cc-1]=b[r][c]
+                result.append(bcopy)
+            else :
+                if b[cr+1][cc-1].isupper() :
+                    bcopy=copy.deepcopy(b)
+                    bcopy[r][c]='.'
+                    bcopy[cr+1][cc-1]=b[r][c]
+                    result.append(bcopy)
+                    break
+                else :
+                    break
+            cr+=1
+            cc-=1
+    return result
+
+#function to move quetzal
+def moveq(b,r,c,player) :
+    result=[]
+    re=movestrat(b,r,c,player)
+    re1=movediag(b,r,c,player)
+    for i in re :
+        result.append(i)
+    for j in re1 :
+        result.append(j)
+    return result
+
+
+#function to move the king
+def moveking(b,r,c,player) :
+    result=[]
+    if player=='w' :
+        #down
+        if r+1<=7 :
+            if b[r+1][c]=='.' or b[r+1][c].islower():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r+1][c]=b[r][c]
+                result.append(bcopy)
+        #up
+        if r-1>=0 :
+            if b[r-1][c]=='.' or b[r-1][c].islower():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r-1][c]=b[r][c]
+                result.append(bcopy)
+        #left
+        if c-1>=0 :
+            if b[r][c-1]=='.' or b[r][c-1].islower():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r][c-1]=b[r][c]
+                result.append(bcopy)
+        #right
+        if c+1<=7 :
+            if b[r][c+1]=='.' or b[r][c+1].islower():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r][c+1]=b[r][c]
+                result.append(bcopy)
+        #rup
+        if c+1<=7 and r-1>=0 :
+            if b[r-1][c+1]=='.' or b[r-1][c+1].islower():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r-1][c+1]=b[r][c]
+                result.append(bcopy)
+        #lup
+        if c-1>=0 and r-1>=0 :
+            if b[r-1][c-1]=='.' or b[r-1][c-1].islower():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r-1][c-1]=b[r][c]
+                result.append(bcopy)
+        #rd
+        if c+1<=7 and r+1<=7 :
+            if b[r+1][c+1]=='.' or b[r+1][c+1].islower():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r+1][c+1]=b[r][c]
+                result.append(bcopy)
+        #ld
+        if c-1>=0 and r+1<=7 :
+            if b[r+1][c-1]=='.' or b[r+1][c-1].islower():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r+1][c-1]=b[r][c]
+                result.append(bcopy)
+    return result
+
+
+#function to move nighthawk
+def moven(b,r,c,player) :
+    result=[]
+    if player=='w' :
+        #2upleft
+        if r-2>=0 and c-1>=0 :
+            if b[r-2][c-1]=='.' or b[r-2][c-1].islower():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r-2][c-1]=b[r][c]
+                result.append(bcopy)
+        #2upright
+        if r-2>=0 and c+1<=7 :
+            if b[r-2][c+1]=='.' or b[r-2][c+1].islower():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r-2][c+1]=b[r][c]
+                result.append(bcopy)
+        #1upleft
+        if r-1>=0 and c-2>=0 :
+            if b[r-1][c-2]=='.' or b[r-1][c-2].islower():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r-1][c-2]=b[r][c]
+                result.append(bcopy)
+        #1upright
+        if r-1>=0 and c+2<=7 :
+            if b[r-1][c+2]=='.' or b[r-1][c+2].islower():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r-1][c+2]=b[r][c]
+                result.append(bcopy)
+        #2downright
+        if r+2<=7 and c+1<=7 :
+            if b[r+2][c+1]=='.' or b[r+2][c+1].islower():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r+2][c+1]=b[r][c]
+                result.append(bcopy)
+        #2downleft
+        if r+2<=7 and c-1>=0 :
+            if b[r+2][c-1]=='.' or b[r+2][c-1].islower():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r+2][c-1]=b[r][c]
+                result.append(bcopy)
+        #1downleft
+        if r+1<=7 and c-2>=0 :
+            if b[r+1][c-2]=='.' or b[r+1][c-2].islower():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r+1][c-2]=b[r][c]
+                result.append(bcopy)
+        #1downright
+        if r+1<=7 and c+2<=7 :
+            if b[r+1][c+2]=='.' or b[r+1][c+2].islower():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r+1][c+2]=b[r][c]
+                result.append(bcopy)
+    else :
+        #2upleft
+        if r-2>=0 and c-1>=0 :
+            if b[r-2][c-1]=='.' or b[r-2][c-1].isupper():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r-2][c-1]=b[r][c]
+                result.append(bcopy)
+        #2upright
+        if r-2>=0 and c+1<=7 :
+            if b[r-2][c+1]=='.' or b[r-2][c+1].isupper():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r-2][c+1]=b[r][c]
+                result.append(bcopy)
+        #1upleft
+        if r-1>=0 and c-2>=0 :
+            if b[r-1][c-2]=='.' or b[r-1][c-2].isupper():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r-1][c-2]=b[r][c]
+                result.append(bcopy)
+        #1upright
+        if r-1>=0 and c+2<=7 :
+            if b[r-1][c+2]=='.' or b[r-1][c+2].isupper():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r-1][c+2]=b[r][c]
+                result.append(bcopy)
+        #2downright
+        if r+2<=7 and c+1<=7 :
+            if b[r+2][c+1]=='.' or b[r+2][c+1].isupper():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r+2][c+1]=b[r][c]
+                result.append(bcopy)
+        #2downleft
+        if r+2<=7 and c-1>=0 :
+            if b[r+2][c-1]=='.' or b[r+2][c-1].isupper():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r+2][c-1]=b[r][c]
+                result.append(bcopy)
+        #1downleft
+        if r+1<=7 and c-2>=0 :
+            if b[r+1][c-2]=='.' or b[r+1][c-2].isupper():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r+1][c-2]=b[r][c]
+                result.append(bcopy)
+        #1downright
+        if r+1<=7 and c+2<=7 :
+            if b[r+1][c+2]=='.' or b[r+1][c+2].isupper():
+                bcopy=copy.deepcopy(b)
+                bcopy[r][c]='.'
+                bcopy[r+1][c+2]=b[r][c]
+                result.append(bcopy)
+    return result
 
 def printboard (b) :
     for i in range (8) :
@@ -238,6 +592,42 @@ def printboard (b) :
 print "startboard"
 printboard(cboard)
 
-result=mover(cboard,7,0,'b') 
-for i in result :
-    printboard(i)
+
+
+def gensucc(b) :
+    succ=[]
+    for i in range (8) :
+        for j in range (8) :
+            if b[i][j]!='.' :
+                if b[i][j]=='R' or b[i][j]=='r':
+                    result=movestrat(b,i,j,player)
+                    for a in result :
+                        succ.append(a)
+                if b[i][j]=='P' or b[i][j]=='p':
+                    result=movep(b,i,j,player)
+                    for a in result :
+                        succ.append(a)
+                if b[i][j]=='N' or b[i][j]=='n':
+                    result=moven(b,i,j,player)
+                    for a in result :
+                        succ.append(a)
+                if b[i][j]=='Q' or b[i][j]=='q':
+                    result=moveq(b,i,j,player)
+                    for a in result :
+                        succ.append(a)
+                if b[i][j]=='K' or b[i][j]=='k':
+                    result=moveking(b,i,j,player)
+                    for a in result :
+                        succ.append(a)
+                if b[i][j]=='B' or b[i][j]=='b':
+                    result=movediag(b,i,j,player)
+                    for a in result :
+                        succ.append(a)
+    return len(succ)
+                    
+
+
+print gensucc(cboard)
+# result=moven(cboard,3,3,'w') 
+# for i in result :
+#     printboard(i)
