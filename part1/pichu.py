@@ -1,3 +1,5 @@
+
+
 import sys
 import copy
 
@@ -592,10 +594,25 @@ def printboard (b) :
 print "startboard"
 printboard(cboard)
 
-
+def heuristic_material(state):
+    X = {'p': 1, 'r': 5, 'b': 3, 'n': 3, 'q': 9, 'k': 0}
+    count_white = 0
+    count_black = 0
+    y = ''
+    for j in state:
+        
+        for i,value in enumerate(j):
+            
+            if value[i].islower():
+                count_black = count_black + X[value[i]]
+            elif value[i].isupper():
+                y = value[i].lower()
+                count_white = count_white + X[y]
+    return(count_white-count_black)
 
 def gensucc(b) :
     succ=[]
+    count=0
     for i in range (8) :
         for j in range (8) :
             if b[i][j]!='.' :
@@ -623,6 +640,9 @@ def gensucc(b) :
                     result=movediag(b,i,j,player)
                     for a in result :
                         succ.append(a)
+                count=count+1
+                print("Heuristic is  %d" %heuristic_material(succ))
+    print(count)
     return len(succ)
                     
 
@@ -631,3 +651,4 @@ print gensucc(cboard)
 # result=moven(cboard,3,3,'w') 
 # for i in result :
 #     printboard(i)
+
