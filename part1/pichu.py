@@ -370,7 +370,7 @@ def movediag(b,r,c,player) :
         cr=r
         cc=c
         #left-down
-        while (cr+1>=0 and cc-1>=0) :
+        while (cr+1<=7 and cc-1>=0) :
             if b[cr+1][cc-1]=='.' :
                 bcopy=copy.deepcopy(b)
                 bcopy[r][c]='.'
@@ -584,15 +584,30 @@ def moven(b,r,c,player) :
     return result
 
 def printboard (b) :
+    str_op=""
     for i in range (8) :
         for j in range (8) :
+            str_op=str_op+b[i][j]
             sys.stdout.write(b[i][j])
         print ("")
+    print str_op
 
 print "startboard"
 printboard(cboard)
 
-
+def heuristic_material(state):
+    X = {'p': 1, 'r': 5, 'b': 3, 'n': 3, 'q': 9, 'k': 0}
+    count_white = 0
+    count_black = 0
+    y = ''
+    for i,j in enumerate(state):
+        for value in j:            
+            if value.islower():
+                count_black = count_black + X[value]
+            elif value.isupper():
+                y = value.lower()
+                count_white = count_white + X[y]
+    return(count_white-count_black)
 
 def gensucc(b,player) :
     succ=[]
@@ -652,7 +667,7 @@ def gensucc(b,player) :
                         result=movediag(b,i,j,player)
                         for a in result :
                             succ.append(a)
-    return len(succ)
+    return succ
                     
 def minmax(b) :
     s=gensucc(b,'w')
@@ -664,13 +679,10 @@ def minmax(b) :
             l=[]
             suc=gensucc(i,'w')
             for k in suc :
-                l.append(heuristic(k))
-            li.append(min(l))
-        values.append(max(li))
+                l.append(heuristic_material(k))
+            li.append(max(l))
+        values.append(min(li))
     return s[values.index(max(values))]
 
 
-print gensucc(cboard)
-# result=moven(cboard,3,3,'w') 
-# for i in result :
-#     printboard(i)
+printboard(minmax(cboard))
