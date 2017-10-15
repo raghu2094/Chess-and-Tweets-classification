@@ -594,37 +594,80 @@ printboard(cboard)
 
 
 
-def gensucc(b) :
+def gensucc(b,player) :
     succ=[]
-    for i in range (8) :
-        for j in range (8) :
-            if b[i][j]!='.' :
-                if b[i][j]=='R' or b[i][j]=='r':
-                    result=movestrat(b,i,j,player)
-                    for a in result :
-                        succ.append(a)
-                if b[i][j]=='P' or b[i][j]=='p':
-                    result=movep(b,i,j,player)
-                    for a in result :
-                        succ.append(a)
-                if b[i][j]=='N' or b[i][j]=='n':
-                    result=moven(b,i,j,player)
-                    for a in result :
-                        succ.append(a)
-                if b[i][j]=='Q' or b[i][j]=='q':
-                    result=moveq(b,i,j,player)
-                    for a in result :
-                        succ.append(a)
-                if b[i][j]=='K' or b[i][j]=='k':
-                    result=moveking(b,i,j,player)
-                    for a in result :
-                        succ.append(a)
-                if b[i][j]=='B' or b[i][j]=='b':
-                    result=movediag(b,i,j,player)
-                    for a in result :
-                        succ.append(a)
+    if player=='w' :
+        for i in range (8) :
+            for j in range (8) :
+                if b[i][j]!='.' :
+                    if b[i][j]=='R':
+                        result=movestrat(b,i,j,player)
+                        for a in result :
+                            succ.append(a)
+                    if b[i][j]=='P':
+                        result=movep(b,i,j,player)
+                        for a in result :
+                            succ.append(a)
+                    if b[i][j]=='N':
+                        result=moven(b,i,j,player)
+                        for a in result :
+                            succ.append(a)
+                    if b[i][j]=='Q':
+                        result=moveq(b,i,j,player)
+                        for a in result :
+                            succ.append(a)
+                    if b[i][j]=='K':
+                        result=moveking(b,i,j,player)
+                        for a in result :
+                            succ.append(a)
+                    if b[i][j]=='B':
+                        result=movediag(b,i,j,player)
+                        for a in result :
+                            succ.append(a)
+    else :
+        for i in range (8) :
+            for j in range (8) :
+                if b[i][j]!='.' :
+                    if b[i][j]=='r':
+                        result=movestrat(b,i,j,player)
+                        for a in result :
+                            succ.append(a)
+                    if b[i][j]=='p':
+                        result=movep(b,i,j,player)
+                        for a in result :
+                            succ.append(a)
+                    if b[i][j]=='n':
+                        result=moven(b,i,j,player)
+                        for a in result :
+                            succ.append(a)
+                    if b[i][j]=='q':
+                        result=moveq(b,i,j,player)
+                        for a in result :
+                            succ.append(a)
+                    if b[i][j]=='k':
+                        result=moveking(b,i,j,player)
+                        for a in result :
+                            succ.append(a)
+                    if b[i][j]=='b':
+                        result=movediag(b,i,j,player)
+                        for a in result :
+                            succ.append(a)
     return len(succ)
                     
+def minmax(b) :
+    s=gensucc(b,'w')
+    values=[]
+    for i in s :
+        li=[]
+        su=gensucc(i,'b')
+        for j in su :
+            l=[]
+            suc=gensucc(i,'w')
+            for k in suc :
+                l.append(heuristic(k))
+            li.append(min(l))
+        values.append(max(li))
+    return s[values.index(max(values))]
 
 
 print gensucc(cboard)
