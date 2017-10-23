@@ -135,25 +135,6 @@ for i in range (len(docs2)) :
 f3=open(output_file,"w")
 twecnt=0
 co_cnt=0
-# for tw in docs2 :
-#     twecnt+=1
-#     infeat=tw.split(" ")[1:]
-#     all_label_prob=[]
-#     for city in city_f :
-#         feature_prob=[]
-#         p_city=city.lower().replace("_","").replace(",","")
-#         for i in infeat:
-#             if i in probfl[p_city].keys():
-#                 feature_prob.append(float(probfl[p_city][i])/float(sum_of_feature_occ[p_city]))
-#         total_prob=1
-#         for j in feature_prob :
-#             total_prob=total_prob*j
-#         all_label_prob.append((total_prob)*prob_of_label[p_city])
-#     if city_f[all_label_prob.index(max(all_label_prob))].lower().replace("_","").replace(",","") == tw.split(" ")[0] :
-#         co_cnt += 1
-#     f3.write(city_f[all_label_prob.index(max(all_label_prob))]+" "+tw+"\n")
-# f3.close()
-
 for t in range(len(docs2)) :
     twecnt+=1
     infeat=docs2[t].split(" ")[1:]
