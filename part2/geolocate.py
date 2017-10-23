@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: iso-8859-1 -*-
+#DESIGN DECISIONS ARE IN A SEPARATE PDF Q2DESIGNDECISIONS.pdf
 import io
 import HTMLParser
 import string
